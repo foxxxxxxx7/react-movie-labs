@@ -1,4 +1,4 @@
-import { filterByGenre, filterByTitle } from "../support/e2e";
+import { filterByGenre, filterByTitle, filterByTitleAndGenre } from "../support/e2e";
 let movies; // List of Discover movies from TMDB
 
 describe("Filtering", () => {
@@ -54,6 +54,19 @@ describe("Filtering", () => {
         });
     });
     describe("Combined genre and title", () => {
-        // TODO
+        it("show movies with the selected genre and title", () => {
+            const selectedGenreId = 35;
+            const selectedGenreText = "Comedy";
+            const searchString = "bullet";
+            const matchingMovies = filterByTitleAndGenre(movies, selectedGenreId, searchString);
+            cy.get("#filled-search").clear().type(searchString); // Enter m in text box
+            cy.get("#genre-select").click();
+            cy.get("li").contains(selectedGenreText).click();
+            cy.get(".MuiCardHeader-content").should(
+                "have.length",
+                matchingMovies.length
+            );
+
+        });
     });
 });
