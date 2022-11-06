@@ -4,6 +4,8 @@ import { getUpcoming } from "../api/tmdb-api";
 import Spinner from '../components/spinner';
 import AddToFavoritesIcon from '../components/cardIcons/addToFavorites'
 import { useQuery } from 'react-query';
+import PlaylistAddIcon from '../components/cardIcons/addToWatchlist';
+
 
 const UpcomingPage = (props) => {
     const { data, error, isLoading, isError } = useQuery('discover', getUpcoming)
@@ -25,7 +27,13 @@ const UpcomingPage = (props) => {
             title='Upcoming Movies'
             movies={movies}
             action={(movie) => {
-                return <AddToFavoritesIcon movie={movie} />
+                return (
+                    <>
+                        <AddToFavoritesIcon movie={movie} />
+                        <PlaylistAddIcon movie={movie} />
+                    </>
+                );
+
             }}
         />
     );
