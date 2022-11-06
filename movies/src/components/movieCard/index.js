@@ -15,14 +15,22 @@ import img from '../../images/film-poster-placeholder.png';
 import { Link } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 import { MoviesContext } from "../../contexts/moviesContext";
+import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+
 
 export default function MovieCard({ movie, action }) {
     const { favorites, addToFavorites } = useContext(MoviesContext);
+    const { watchlist } = useContext(MoviesContext);
 
     if (favorites.find((id) => id === movie.id)) {
         movie.favorite = true;
     } else {
         movie.favorite = false
+    }
+    if (watchlist.find((id) => id === movie.id)) {
+        movie.watchlist = true;
+    } else {
+        movie.watchlist = false
     }
 
     const handleAddToFavorite = (e) => {
@@ -37,6 +45,10 @@ export default function MovieCard({ movie, action }) {
                     movie.favorite ? (
                         <Avatar sx={{ backgroundColor: 'red' }}>
                             <FavoriteIcon />
+                        </Avatar>
+                    ) : movie.watchlist ? (
+                        <Avatar sx={{ backgroundColor: 'green' }}>
+                            <PlaylistAddCheckIcon />
                         </Avatar>
                     ) : null
                 }
